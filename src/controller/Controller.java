@@ -42,10 +42,6 @@ public class Controller {
                     datos = modelo.darDatosPQ();
                     view.printMessage("Numero de datos cargados: " + datos.size());
                     
-                    for(Comparendo c: datos)
-                    {
-                    	view.printMessage(c.getObjectId() +"");
-                    }
                     break;
 
                 case 2:
