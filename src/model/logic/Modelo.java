@@ -11,20 +11,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.data_structures.Queue;
+import model.data_structures.MaxPQ;
 
-/**
- * Definicion del modelo del mundo
- */
 public class Modelo {
 
-	private Queue<Comparendo> datosC;
+	private MaxPQ<Comparendo> datosPQ;
 
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
 
 	public void cargarDatos() {
 
-		datosC = new Queue<Comparendo>();
+		datosPQ = new MaxPQ<Comparendo>();
 
 		JsonReader reader;
 		try {
@@ -55,7 +52,7 @@ public class Modelo {
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
-				datosC.enQueue(c);
+				datosPQ.insert(c);
 			}
 
 		}
@@ -68,119 +65,9 @@ public class Modelo {
 
 
 	
-	public Queue<Comparendo> darDatosC()
+	public MaxPQ<Comparendo> darDatosPQ()
 	{
-		return datosC;
+		return datosPQ;
 	}
-	
-    public void ShellSort(Comparable datos[]) {
-
-        Long inicio = System.currentTimeMillis();
-
-        int tamano = datos.length;
-
-        for (int gap = tamano / 2; gap > 0; gap /= 2) {
-
-            for (int i = gap; i < tamano; i++) {
-
-                Comparable temp = datos[i];
-
-                for (int j = i; (j >= gap) && (datos[j - gap].compareTo(temp) > 0); j -= gap) {
-                    datos[j] = datos[j - gap];
-
-                    datos[j] = temp;
-                }
-
-            }
-
-        }
-
-        Long fin = System.currentTimeMillis();
-
-        double seconds = ((inicio - fin) / 1000);
-
-        System.out.println(seconds + " segundos duró ShellSort.");
-
-
-    }
-
-
-    public void mergeSort(Comparable datos[], int lo, int mid, int hi) {
-
-        Long inicio = System.currentTimeMillis();
-
-        int i = lo;
-        int j = mid + 1;
-
-        Comparable[] array = new Comparable[datos.length];
-
-        for (int k = lo; k <= hi; k++) {
-
-            array[k] = datos[k];
-        }
-        for (int k = lo; k <= hi; k++) {
-            if (i > mid) {
-                datos[k] = array[j++];
-            } else if (j > hi) {
-                datos[k] = array[i++];
-
-            } else if ((array[j].compareTo(array[i])) < 0) {
-                datos[k] = array[j++];
-            } else {
-                datos[k] = array[i++];
-            }
-        }
-
-        Long fin = System.currentTimeMillis();
-
-        double seconds = ((inicio - fin) / 1000);
-
-        System.out.println(seconds + " segundos duró Mergesort.");
-
-
-    }
-
-    public int partition(Comparable datos[], int lo, int hi) {
-
-        int x = datos.length;
-        Comparable pivote = datos[x];
-        int i = (lo - 1);
-
-        for (int j = lo; j < hi; j++) {
-            if (datos[j].compareTo(pivote) <= 0) {
-                i++;
-
-                Comparable temp = datos[i];
-                datos[i] = datos[j];
-                datos[j] = temp;
-
-            }
-        }
-        Comparable temp = datos[i + 1];
-        datos[i + 1] = datos[hi];
-        datos[hi] = temp;
-
-        return i + 1;
-
-    }
-
-    public void quickSort(Comparable datos[], int lo, int hi) {
-
-        Long inicio = System.currentTimeMillis();
-
-        if (lo < hi) {
-            int pivote = partition(datos, lo, hi);
-
-            quickSort(datos, lo, pivote - 1);
-            quickSort(datos, pivote + 1, hi);
-
-        }
-
-        Long fin = System.currentTimeMillis();
-        double seconds = ((fin - inicio) / 1000);
-        System.out.println(seconds + " segundos, duró QuickSort.");
-
-    }
-
 
 }
