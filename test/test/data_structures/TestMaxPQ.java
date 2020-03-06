@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestQueue {
+public class TestMaxPQ {
 //
 //	private ArregloDinamico arreglo;
 //	private static int TAMANO=100;
