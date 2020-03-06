@@ -42,16 +42,19 @@ public class Controller {
                     datos = modelo.darDatosPQ();
                     view.printMessage("Numero de datos cargados: " + datos.size());
                     
-                    
+                    for(Comparendo c: datos)
+                    {
+                    	view.printMessage(c.getObjectId() +"");
+                    }
                     break;
 
                 case 2:
-
+                	
+                	
+                	
                     break;
 
                 case 3:
-
-                  
 
                     break;
 
@@ -66,7 +69,7 @@ public class Controller {
                     break;
 
                 default:
-                    view.printMessage("Opcion Invalida");
+                    view.printMessage("--------- Opcion Invalida!! ------------------");
                     break;
 
 
