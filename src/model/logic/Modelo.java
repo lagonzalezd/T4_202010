@@ -17,7 +17,7 @@ public class Modelo {
 
 	private MaxPQ<Comparendo> datosPQ;
 
-	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
+	public static String PATH = "./data/comparendos_dei_2018.geojson";
 
 	public void cargarDatos() {
 
