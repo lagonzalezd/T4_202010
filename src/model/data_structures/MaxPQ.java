@@ -90,7 +90,7 @@ public class MaxPQ<K> implements Iterable<K>
 		K max = pq[1];
 		exch(1, N--);
 		sink(1);
-		pq[N+1] = null;     // to avoid loitering and help with garbage collection
+		pq[N+1] = null; 
 		if ((N > 0) && (N == (pq.length - 1) / 4)) resize(pq.length / 2);
 		assert isMaxHeap();
 		return max;
@@ -147,7 +147,8 @@ public class MaxPQ<K> implements Iterable<K>
 	}
 
 
-	private boolean isMaxHeapOrdered(int k) {
+	private boolean isMaxHeapOrdered(int k) 
+	{
 		if (k > N) return true;
 		int left = 2*k;
 		int right = 2*k + 1;
@@ -160,9 +161,8 @@ public class MaxPQ<K> implements Iterable<K>
 		return new HeapIterator();
 	}
 
-	private class HeapIterator implements Iterator<K> {
-
-
+	private class HeapIterator implements Iterator<K> 
+	{
 		private MaxPQ<K> copy;
 
 		public HeapIterator() {
