@@ -11,24 +11,23 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.data_structures.MaxPQ;
+import model.data_structures.MaxColaCP;
 
 public class Modelo {
 
-	private MaxPQ<Comparendo> datosPQ;
+	private MaxColaCP<Comparendo> datosPQ;
 
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
 
 	public void cargarDatos() {
 
-		datosPQ = new MaxPQ<Comparendo>();
+		datosPQ = new MaxColaCP<Comparendo>();
 
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader(PATH));
 			JsonElement elem = JsonParser.parseReader(reader);
 			JsonArray e2 = elem.getAsJsonObject().get("features").getAsJsonArray();
-
 
 			SimpleDateFormat parser=new SimpleDateFormat("yyyy/MM/dd");
 
@@ -63,11 +62,57 @@ public class Modelo {
 		}
 	}
 
-
 	
-	public MaxPQ<Comparendo> darDatosPQ()
+	public MaxColaCP<Comparendo> darDatosPQ()
 	{
 		return datosPQ;
 	}
+	
+	public MaxColaCP<Comparendo> copiarDatos()
+	{
+		MaxColaCP<Comparendo> copia = new MaxColaCP<Comparendo>();
+		
+		copia = datosPQ;
+		
+		return copia;
+	}
+	
+	
+	public MaxColaCP<Comparendo> nComparendosMasNorte(int N, String[] lista)
+	{
+		MaxColaCP<Comparendo> data = copiarDatos();
+		MaxColaCP<Comparendo> aRetornar = new MaxColaCP<Comparendo>();
+		
+		boolean termino = false;
+		
+		for(int i = 0; i< data.size() && !termino; i++){
+					
+			Comparendo actual = data.delMax();
+			
+			boolean es = false;
+			for(String v: lista)
+			{
+				if(v.equalsIgnoreCase(actual.getClase_vehi()))
+				{
+					es = true;
+				}
+			}
+			
+			if(es) aRetornar.insert(actual);
+			
+			if(aRetornar.size() == N) termino = true;
+			
+		}
+		
+		return aRetornar;
+		
+	}
+	
+	
+	
+
+
+	
+	
 
 }
