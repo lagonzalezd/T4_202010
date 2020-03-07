@@ -4,16 +4,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MaxPQ<K> implements Iterable<K>
+public class MaxPQ<Key> implements Iterable<Key>
 {
-	private K[] pq;
+	private Key[] pq;
 	private int N;
-	private Comparator<K> comparator;
+	private Comparator<Key> comparator;
 
 	@SuppressWarnings("unchecked")
 	public MaxPQ(int maxN)
 	{
-		pq = (K[]) new Comparable[maxN+1]; 
+		pq = (Key[]) new Comparable[maxN+1];
 		N = 0;
 	}
 
@@ -23,22 +23,22 @@ public class MaxPQ<K> implements Iterable<K>
 	}
 
 	@SuppressWarnings("unchecked")
-	public MaxPQ(int initC, Comparator<K> comparator)
+	public MaxPQ(int initC, Comparator<Key> comparator)
 	{
 		this.comparator = comparator;
-		pq = (K[]) new Object[initC + 1];
+		pq = (Key[]) new Object[initC + 1];
 		N = 0;
 	}
-	public MaxPQ(Comparator<K> comparator)
+	public MaxPQ(Comparator<Key> comparator)
 	{
 		this(1, comparator);
 	}
 
 	@SuppressWarnings("unchecked")
-	public MaxPQ(K[] keys) 
+	public MaxPQ(Key[] keys)
 	{
 		N = keys.length;
-		pq = (K[]) new Object[keys.length + 1];
+		pq = (Key[]) new Object[keys.length + 1];
 		for (int i = 0; i < N; i++)
 			pq[i+1] = keys[i];
 
@@ -57,7 +57,7 @@ public class MaxPQ<K> implements Iterable<K>
 		return N; 
 	}
 
-	public K max() 
+	public Key max()
 	{
 		return pq[1];
 	}
@@ -67,7 +67,7 @@ public class MaxPQ<K> implements Iterable<K>
 	{
 		assert capacity > N;
 
-		K[] temp = (K[]) new Object[capacity];
+		Key[] temp = (Key[]) new Object[capacity];
 
 		for (int i = 1; i <= N; i++)
 		{
@@ -76,7 +76,7 @@ public class MaxPQ<K> implements Iterable<K>
 
 		pq = temp;
 	}
-	public void insert(K x)
+	public void insert(Key x)
 	{
 		if (N == pq.length - 1) resize(2 * pq.length);
 
@@ -84,10 +84,10 @@ public class MaxPQ<K> implements Iterable<K>
 		swim(N);
 		assert isMaxHeap();
 	}
-	public K delMax() 
+	public Key delMax()
 	{
 		if (isEmpty()) throw new NoSuchElementException("La cola de prioridad esta vacia");
-		K max = pq[1];
+		Key max = pq[1];
 		exch(1, N--);
 		sink(1);
 		pq[N+1] = null;     // to avoid loitering and help with garbage collection
@@ -121,7 +121,7 @@ public class MaxPQ<K> implements Iterable<K>
 	private boolean less(int i, int j) {
 		if (comparator == null) 
 		{
-			return ((Comparable<K>) pq[i]).compareTo(pq[j]) < 0;
+			return ((Comparable<Key>) pq[i]).compareTo(pq[j]) < 0;
 		}
 		else 
 		{
@@ -130,7 +130,7 @@ public class MaxPQ<K> implements Iterable<K>
 	}
 
 	private void exch(int i, int j) {
-		K swap = pq[i];
+		Key swap = pq[i];
 		pq[i] = pq[j];
 		pq[j] = swap;
 	}
@@ -156,18 +156,18 @@ public class MaxPQ<K> implements Iterable<K>
 		return isMaxHeapOrdered(left) && isMaxHeapOrdered(right);
 	}
 
-	public Iterator<K> iterator() {
+	public Iterator<Key> iterator() {
 		return new HeapIterator();
 	}
 
-	private class HeapIterator implements Iterator<K> {
+	private class HeapIterator implements Iterator<Key> {
 
 
-		private MaxPQ<K> copy;
+		private MaxPQ<Key> copy;
 
 		public HeapIterator() {
-			if (comparator == null) copy = new MaxPQ<K>(size());
-			else                    copy = new MaxPQ<K>(size(), comparator);
+			if (comparator == null) copy = new MaxPQ<Key>(size());
+			else                    copy = new MaxPQ<Key>(size(), comparator);
 			for (int i = 1; i <= N; i++)
 				copy.insert(pq[i]);
 		}
@@ -175,7 +175,7 @@ public class MaxPQ<K> implements Iterable<K>
 		public boolean hasNext()  { return !copy.isEmpty();                     }
 		public void remove()      { throw new UnsupportedOperationException();  }
 
-		public K next() {
+		public Key next() {
 			if (!hasNext()) throw new NoSuchElementException();
 			return copy.delMax();
 		}
