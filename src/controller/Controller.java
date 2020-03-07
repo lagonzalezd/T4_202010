@@ -3,6 +3,7 @@ package controller;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import model.data_structures.ArregloDinamico;
 import model.data_structures.MaxColaCP;
 import model.logic.Comparendo;
 import model.logic.Modelo;
@@ -36,23 +37,28 @@ public class Controller {
             switch (option) {
                 case 1:
 
+                	
+                	view.printMessage("Ingrese la cantidad de datos a cargar en la cola de prioridad");
+                	
                     modelo = new Modelo();
                     
-                    long start = System.currentTimeMillis();
+                    int optionC = lector.nextInt();
+                    
                     modelo.cargarDatos();
+                    
+                    long start = System.currentTimeMillis();
+                    datos = modelo.cargarEnColaDePrioridad(optionC);
                     long end = System.currentTimeMillis();
 
                     view.printMessage("Tiempo de carga (seg): " + (end-start)/1000.0 + "\n");
-                    
-                    datos = modelo.darDatosPQ();
-                    
+
                     view.printMessage("Numero de datos cargados: " + datos.size());
                     
                     break;
 
                 case 2:
                         	
-                	view.printMessage("Ingrese el numero de comparendo que desea buscar");
+                	view.printMessage("Ingrese el numero de comparendos que desea buscar");
                 	
                 	int N = lector.nextInt();
                 	
@@ -70,15 +76,11 @@ public class Controller {
                 	
                 	for (Comparendo c: all)
                 	{
-                		view.printMessage("Object ID: " + c.getObjectId() + " Clase del vehiculo: " + c.getClase_vehi() + " latitud: " + c.getLatitud() +" longitud: " + c.getLongitud() + "\n");
-                	}
-                	
+                		view.printMessage("Object ID: " + c.getObjectId() + ", Clase del vehiculo: " + c.getClase_vehi() + ", latitud: " + c.getLatitud() +", longitud: " + c.getLongitud() + "\n");
+                	}                	
                     break;
 
                 case 3:
-
-                	
-                    break;
 
                 case 4:
 
