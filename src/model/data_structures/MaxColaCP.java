@@ -4,38 +4,36 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MaxPQ<K> implements Iterable<K>
+public class MaxColaCP<K> implements Iterable<K>
 {
 	private K[] pq;
 	private int N;
 	private Comparator<K> comparator;
 
-	@SuppressWarnings("unchecked")
-	public MaxPQ(int maxN)
+	
+	public MaxColaCP(int maxN)
 	{
 		pq = (K[]) new Comparable[maxN+1]; 
 		N = 0;
 	}
 
-	public MaxPQ()
+	public MaxColaCP()
 	{
 		this(1);
 	}
 
-	@SuppressWarnings("unchecked")
-	public MaxPQ(int initC, Comparator<K> comparator)
+	public MaxColaCP(int initC, Comparator<K> comparator)
 	{
 		this.comparator = comparator;
 		pq = (K[]) new Object[initC + 1];
 		N = 0;
 	}
-	public MaxPQ(Comparator<K> comparator)
+	public MaxColaCP(Comparator<K> comparator)
 	{
 		this(1, comparator);
 	}
 
-	@SuppressWarnings("unchecked")
-	public MaxPQ(K[] keys) 
+	public MaxColaCP(K[] keys) 
 	{
 		N = keys.length;
 		pq = (K[]) new Object[keys.length + 1];
@@ -62,7 +60,6 @@ public class MaxPQ<K> implements Iterable<K>
 		return pq[1];
 	}
 
-	@SuppressWarnings("unchecked")
 	private void resize(int capacity)
 	{
 		assert capacity > N;
@@ -90,7 +87,7 @@ public class MaxPQ<K> implements Iterable<K>
 		K max = pq[1];
 		exch(1, N--);
 		sink(1);
-		pq[N+1] = null;     // to avoid loitering and help with garbage collection
+		pq[N+1] = null; 
 		if ((N > 0) && (N == (pq.length - 1) / 4)) resize(pq.length / 2);
 		assert isMaxHeap();
 		return max;
@@ -147,7 +144,8 @@ public class MaxPQ<K> implements Iterable<K>
 	}
 
 
-	private boolean isMaxHeapOrdered(int k) {
+	private boolean isMaxHeapOrdered(int k) 
+	{
 		if (k > N) return true;
 		int left = 2*k;
 		int right = 2*k + 1;
@@ -160,14 +158,13 @@ public class MaxPQ<K> implements Iterable<K>
 		return new HeapIterator();
 	}
 
-	private class HeapIterator implements Iterator<K> {
-
-
-		private MaxPQ<K> copy;
+	private class HeapIterator implements Iterator<K> 
+	{
+		private MaxColaCP<K> copy;
 
 		public HeapIterator() {
-			if (comparator == null) copy = new MaxPQ<K>(size());
-			else                    copy = new MaxPQ<K>(size(), comparator);
+			if (comparator == null) copy = new MaxColaCP<K>(size());
+			else                    copy = new MaxColaCP<K>(size(), comparator);
 			for (int i = 1; i <= N; i++)
 				copy.insert(pq[i]);
 		}

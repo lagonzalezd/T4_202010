@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -11,24 +12,27 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.data_structures.MaxPQ;
+import model.data_structures.ArregloDinamico;
+import model.data_structures.MaxColaCP;
+
 
 public class Modelo {
 
-	private MaxPQ<Comparendo> datosPQ;
+	private ArregloDinamico<Comparendo> datos;
+	
+	private MaxColaCP<Comparendo> datosCP;
 
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
 
 	public void cargarDatos() {
 
-		datosPQ = new MaxPQ<Comparendo>();
+		datos = new ArregloDinamico<Comparendo>();
 
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader(PATH));
 			JsonElement elem = JsonParser.parseReader(reader);
 			JsonArray e2 = elem.getAsJsonObject().get("features").getAsJsonArray();
-
 
 			SimpleDateFormat parser=new SimpleDateFormat("yyyy/MM/dd");
 
@@ -52,7 +56,7 @@ public class Modelo {
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
-				datosPQ.insert(c);
+				datos.add(c);;
 			}
 
 		}
@@ -63,11 +67,70 @@ public class Modelo {
 		}
 	}
 
+	public MaxColaCP<Comparendo> cargarEnColaDePrioridad( int numDatos )
+	{
+		datosCP = new MaxColaCP<Comparendo>();
+
+		Iterator<Comparendo> it = datos.iterator();
+		
+		int i = 0;
+		while(i < numDatos && it.hasNext())
+		{
+			datosCP.insert(it.next());
+			i++;
+		}
+		
+		return datosCP;
+			
+	}
+	
+	public MaxColaCP<Comparendo> copiarDatos()
+	{
+		MaxColaCP<Comparendo> copia = new MaxColaCP<Comparendo>();
+		
+		copia = datosCP;
+		
+		return copia;
+	}
+	
+	
+	public MaxColaCP<Comparendo> nComparendosMasNorte(int N, String[] lista)
+	{
+		
+		MaxColaCP<Comparendo> data = copiarDatos();
+		
+		MaxColaCP<Comparendo> aRetornar = new MaxColaCP<Comparendo>();
+		
+		boolean termino = false;
+		
+		for(int i = 0; i< data.size() && !termino; i++){
+					
+			Comparendo actual = data.delMax();
+			
+			boolean es = false;
+			for(String v: lista)
+			{
+				if(v.equalsIgnoreCase(actual.getClase_vehi()))
+				{
+					es = true;
+				}
+			}
+			
+			if(es) aRetornar.insert(actual);
+			
+			if(aRetornar.size() == N) termino = true;
+			
+		}
+		
+		return aRetornar;
+		
+	}
+	
+	
+	
+
 
 	
-	public MaxPQ<Comparendo> darDatosPQ()
-	{
-		return datosPQ;
-	}
+	
 
 }

@@ -1,9 +1,8 @@
 package model.logic;
 
-
 import java.util.Date;
 
-public class Comparendo implements Comparable<Comparendo> {
+public class Comparendo implements Comparable<Comparendo>{
 
     private int objectId;
     private Date fecha_hora;
@@ -110,21 +109,8 @@ public class Comparendo implements Comparable<Comparendo> {
 
 
     public int compareTo(Comparendo pComparendo) {
-
-        if (this.getFecha_hora().compareTo(pComparendo.getFecha_hora()) == 0) {
-            if (this.getObjectId() > pComparendo.getObjectId()) {
-                return 1;
-            } else {
-                return -1;
-            }
-
-        } else {
-            if (this.getFecha_hora().compareTo(pComparendo.getFecha_hora()) > 0) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
+    	
+    	return new Double (this.getLatitud()).compareTo(new Double(pComparendo.getLatitud()));
 
     }
 }
