@@ -12,11 +12,12 @@ public class Comparendo implements Comparable<Comparendo>{
     private String tipo_servi;
     private String infraccion;
     private String localidad;
+    private String municipio;
 
     private double latitud;
     private double longitud;
 
-    public Comparendo(int objeId, Date fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, double lonP, double latP) {
+    public Comparendo(int objeId, Date fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, String pMunicipio, double lonP, double latP) {
         objectId = objeId;
         fecha_hora = fecha;
         des_infrac = descripcion;
@@ -27,6 +28,7 @@ public class Comparendo implements Comparable<Comparendo>{
         localidad = localidadP;
         longitud = lonP;
         latitud = latP;
+        municipio = pMunicipio;
     }
 
     /**
@@ -84,6 +86,13 @@ public class Comparendo implements Comparable<Comparendo>{
     public String getLocalidad() {
         return localidad;
     }
+    
+    /**
+     * @return el municipio
+     */
+    public String getMunicipio() {
+        return municipio;
+    }
 
     /**
      * @return the latitud
@@ -108,7 +117,8 @@ public class Comparendo implements Comparable<Comparendo>{
     }
 
 
-    public int compareTo(Comparendo pComparendo) {
+    public int compareTo(Comparendo pComparendo) 
+    {
     	
     	return new Double (this.getLatitud()).compareTo(new Double(pComparendo.getLatitud()));
 

@@ -22,7 +22,7 @@ public class Modelo {
 	
 	private MaxColaCP<Comparendo> datosCP;
 
-	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
+	public static String PATH = "./data/comparendos_DEI_2018.geojson";
 
 	public void cargarDatos() {
 
@@ -48,14 +48,15 @@ public class Modelo {
 				String INFRACCION = e.getAsJsonObject().get("properties").getAsJsonObject().get("INFRACCION").getAsString();
 				String DES_INFRAC = e.getAsJsonObject().get("properties").getAsJsonObject().get("DES_INFRAC").getAsString();	
 				String LOCALIDAD = e.getAsJsonObject().get("properties").getAsJsonObject().get("LOCALIDAD").getAsString();
-
+				String MUNICIPIO = e.getAsJsonObject().get("properties").getAsJsonObject().get("MUNICIPIO").getAsString();
+				
 				double longitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(0).getAsDouble();
 
 				double latitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(1).getAsDouble();
 
-				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
+				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, MUNICIPIO, longitud, latitud);
 				datos.add(c);;
 			}
 
@@ -94,7 +95,8 @@ public class Modelo {
 	}
 	
 	
-	public MaxColaCP<Comparendo> nComparendosMasNorte(int N, String[] lista)
+	//Requerimiento 1.
+	public MaxColaCP<Comparendo> nComparendosMasNorteCola(int N, String[] lista)
 	{
 		
 		MaxColaCP<Comparendo> data = copiarDatos();
@@ -125,6 +127,8 @@ public class Modelo {
 		return aRetornar;
 		
 	}
+	
+	
 	
 	
 	
