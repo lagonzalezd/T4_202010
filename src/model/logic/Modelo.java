@@ -13,7 +13,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.data_structures.ArregloDinamico;
 import model.data_structures.MaxColaCP;
 
 

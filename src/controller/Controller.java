@@ -1,9 +1,7 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import model.data_structures.ArregloDinamico;
 import model.data_structures.MaxColaCP;
 import model.logic.Comparendo;
 import model.logic.Modelo;
