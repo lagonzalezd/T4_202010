@@ -22,7 +22,7 @@ public class Modelo {
 	
 	private MaxColaCP<Comparendo> datosCP;
 
-	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
+	public static String PATH = "./data/comparendos_dei_2018.geojson";
 
 	public void cargarDatos() {
 
