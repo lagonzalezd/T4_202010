@@ -5,7 +5,7 @@ import java.util.Date;
 public class Comparendo implements Comparable<Comparendo>{
 
     private int objectId;
-    private String fecha_hora;
+    private Date fecha_hora;
     private String des_infrac;
     private String medio_dete;
     private String clase_vehi;
@@ -17,11 +17,8 @@ public class Comparendo implements Comparable<Comparendo>{
     private double latitud;
     private double longitud;
 
-<<<<<<< HEAD
-    public Comparendo(int objeId, String fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, double lonP, double latP) {
-=======
     public Comparendo(int objeId, Date fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, String pMunicipio, double lonP, double latP) {
->>>>>>> master
+
         objectId = objeId;
         fecha_hora = fecha;
         des_infrac = descripcion;
@@ -45,7 +42,7 @@ public class Comparendo implements Comparable<Comparendo>{
     /**
      * @return the fecha_hora
      */
-    public String getFecha_hora() {
+    public Date getFecha_hora() {
         return fecha_hora;
     }
 
