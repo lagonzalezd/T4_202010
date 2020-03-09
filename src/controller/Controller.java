@@ -69,7 +69,7 @@ public class Controller {
                 	
                 	
                     long inicio = System.currentTimeMillis();
-                    MaxColaCP<Comparendo> all = modelo.nComparendosMasNorte(N, listaS);
+                    MaxColaCP<Comparendo> all = modelo.nComparendosMasNorteCola(N, listaS);
                     long end2 = System.currentTimeMillis();
                     
                     view.printMessage("Tiempo del requerimiento (seg): " + (end2-inicio)/1000.0 + "\n");
