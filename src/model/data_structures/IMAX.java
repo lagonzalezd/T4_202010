@@ -1,7 +1,6 @@
 package model.data_structures;
 
-public interface IMaxColaP<T> {
-
+public interface IMAX <T extends Comparable<T>> {
 
     int darNumElementos();
 

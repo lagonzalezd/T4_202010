@@ -1,9 +1,8 @@
 package model.logic;
 
-
 import java.util.Date;
 
-public class Comparendo implements Comparable<Comparendo> {
+public class Comparendo implements Comparable<Comparendo>{
 
     private int objectId;
     private String fecha_hora;
@@ -13,11 +12,16 @@ public class Comparendo implements Comparable<Comparendo> {
     private String tipo_servi;
     private String infraccion;
     private String localidad;
+    private String municipio;
 
     private double latitud;
     private double longitud;
 
+<<<<<<< HEAD
     public Comparendo(int objeId, String fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, double lonP, double latP) {
+=======
+    public Comparendo(int objeId, Date fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, String pMunicipio, double lonP, double latP) {
+>>>>>>> master
         objectId = objeId;
         fecha_hora = fecha;
         des_infrac = descripcion;
@@ -28,6 +32,7 @@ public class Comparendo implements Comparable<Comparendo> {
         localidad = localidadP;
         longitud = lonP;
         latitud = latP;
+        municipio = pMunicipio;
     }
 
     /**
@@ -85,6 +90,13 @@ public class Comparendo implements Comparable<Comparendo> {
     public String getLocalidad() {
         return localidad;
     }
+    
+    /**
+     * @return el municipio
+     */
+    public String getMunicipio() {
+        return municipio;
+    }
 
     /**
      * @return the latitud
@@ -109,22 +121,10 @@ public class Comparendo implements Comparable<Comparendo> {
     }
 
 
-    public int compareTo(Comparendo pComparendo) {
-
-        if (this.getFecha_hora().compareTo(pComparendo.getFecha_hora()) == 0) {
-            if (this.getObjectId() > pComparendo.getObjectId()) {
-                return 1;
-            } else {
-                return -1;
-            }
-
-        } else {
-            if (this.getFecha_hora().compareTo(pComparendo.getFecha_hora()) > 0) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
+    public int compareTo(Comparendo pComparendo) 
+    {
+    	
+    	return new Double (this.getLatitud()).compareTo(new Double(pComparendo.getLatitud()));
 
     }
 }
