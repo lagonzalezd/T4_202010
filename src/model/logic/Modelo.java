@@ -21,7 +21,7 @@ public class Modelo {
     private Queue<Comparendo> datos;
 
 
-    public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C_small.geojson";
+    public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C.geojson";
 
     public Queue cargarDatos() {
 
@@ -66,6 +66,7 @@ public class Modelo {
         }
         return datos;
     }
+
 
 
 }

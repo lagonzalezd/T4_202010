@@ -51,7 +51,12 @@ public class Controller {
 
                     view.printMessage("Tiempo de carga (seg): " + (end-start)/1000.0 + "\n");
 
-                    view.printMessage("Numero de datos cargados: " + datos.darLongitud());
+                    view.printMessage("Numero de datos cargados: " + datos.darLongitud()+"\n");
+
+                    view.printMessage("Primer comparendo: "+datos.darPrimero().darElemento()+"\n");
+
+                    view.printMessage("Ultimo comparendo: "+datos.darUltimo().darElemento()+"\n");
+
 
                     break;
 

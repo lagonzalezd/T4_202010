@@ -62,5 +62,15 @@ public class Queue<T extends Comparable<T>> {
         }
     }
 
+    public Node darPrimero()
+    {
+        return primero;
+    }
+
+    public Node darUltimo()
+    {
+        return ultimo;
+    }
+
 
 }

@@ -1,30 +1,46 @@
 package model.data_structures;
 
+import model.logic.Comparendo;
+
 public class MaxHeapCP<T extends Comparable<T>> {
 
+    private T[] MaxHeap;
     private int numElementos;
-    private Node primero;
-    private Node ultimo;
+
+
+    public MaxHeapCP(int pTamano) {
+        MaxHeap = (T[]) new Object[pTamano + 1];
+        numElementos = 0;
+
+    }
+
+    public T darMax() {
+
+        if (esVacia()) {
+            return null;
+        } else {
+
+            return MaxHeap[1];
+        }
+    }
 
 
     public int darNumElementos() {
         return numElementos;
     }
 
-    public void agregar(Comparable pElemento) {
+    public void agregar(T pElemento) {
 
     }
 
-    public Comparable sacarMax() {
+    public T sacarMax() {
         return null;
     }
 
-    public Comparable darMax() {
-        return null;
-    }
 
     public boolean esVacia() {
-        return primero == null;
+        return numElementos == 0;
     }
+
 
 }
