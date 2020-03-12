@@ -1,66 +1,78 @@
 package model.data_structures;
 
-public class MaxColaCP<T extends Comparable<T>> {
-
-    private int numElementos;
-    private Node<T> primero;
-    private Node<T> ultimo;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
-    // Primero = máximo.
-    public MaxColaCP() {
-        numElementos = 0;
-        primero = null;
-        ultimo = null;
+public class MaxColaCP<I extends Comparable<I>> implements Iterable<I>, IMaxColaCP
+{
+	private Node<I> first;
+	private Node<I> last;
+	private int n;
+
+	public static class Node<I> {
+		private I item;
+		private Node<I> next;
+	}
+
+	public MaxColaCP() {
+		first = null;
+		last  = null;
+		n = 0;
+	}
+
+
+	public boolean isEmpty() {
+		return first == null;
+	}
+
+
+	public int size() {
+		return n;
+	}
+
+
+	public void enqueue(I item) 
+	{
+		Node<I> oldlast = last;
+		last = new Node<I>();
+		last.item = item;
+		last.next = null;
+		if (isEmpty()) first = last;
+		else           oldlast.next = last;
+		n++;
+	}
+
+    public I dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("Queue vacia");
+        I item = first.item;
+        first = first.next;
+        n--;
+        if (isEmpty()) last = null; 
+        return item;
     }
 
-    public int darNumElementos() {
-        return numElementos;
-    }
+	public Iterator<I> iterator()  {
+		return new LinkedIterator(first);  
+	}
 
-    public void agregar(T pElemento) {
-        Node nuevo = new Node(pElemento);
+	private class LinkedIterator implements Iterator<I> 
+	{
+		private Node<I> current;
 
-        if (esVacia()) {
-            primero = nuevo;
-            ultimo = nuevo;
-        } else {
-            ultimo.cambiarSiguiente(nuevo);
-            ultimo = nuevo;
-        }
-        numElementos++;
+		public LinkedIterator(Node<I> first) {
+			current = first;
+		}
 
-    }
+		public boolean hasNext()  { return current != null;                     }
+		public void remove()      { throw new UnsupportedOperationException();  }
 
-    public T sacarMax() {
-
-        if (esVacia()) {
-            return null;
-
-        } else {
-            T elemento = primero.darElemento();
-            primero = primero.darSiguiente();
-            numElementos--;
-
-            return elemento;
-        }
-
-    }
-
-    public T darMax() {
-
-        if (esVacia()) {
-            return null;
-
-        } else {
-            return primero.darElemento();
-
-        }
-    }
-
-
-    public boolean esVacia() {
-        return primero == null;
-    }
-
+		public I next() {
+			if (!hasNext()) throw new NoSuchElementException();
+			I item = current.item;
+			current = current.next; 
+			return item;
+		}
+		
+	}
 }

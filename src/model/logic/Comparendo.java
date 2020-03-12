@@ -89,9 +89,9 @@ public class Comparendo implements Comparable<Comparendo>{
     }
     
     /**
-     * @return el municipio
+     * @return the fecha_hora
      */
-    public String getMunicipio() {
+    public String getmunicipio() {
         return municipio;
     }
 
