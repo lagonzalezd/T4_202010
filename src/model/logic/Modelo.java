@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Stack;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,21 +13,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.data_structures.ArregloDinamico;
-import model.data_structures.MaxColaCP;
+import model.data_structures.MaxHeapCP;
 
 
 public class Modelo {
 
-	private ArregloDinamico<Comparendo> datos;
+	private Stack<Comparendo> datos;
 	
-	private MaxColaCP<Comparendo> datosCP;
+	private MaxHeapCP<Comparendo> datosCP;
 
-	public static String PATH = "./data/comparendos_DEI_2018.geojson";
+	public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C_small.geojson";
 
 	public void cargarDatos() {
 
-		datos = new ArregloDinamico<Comparendo>();
+		datos = new Stack<Comparendo>();
 
 		JsonReader reader;
 		try {
@@ -34,7 +34,7 @@ public class Modelo {
 			JsonElement elem = JsonParser.parseReader(reader);
 			JsonArray e2 = elem.getAsJsonObject().get("features").getAsJsonArray();
 
-			SimpleDateFormat parser=new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
 			for(JsonElement e: e2) {
 				int OBJECTID = e.getAsJsonObject().get("properties").getAsJsonObject().get("OBJECTID").getAsInt();
@@ -42,11 +42,11 @@ public class Modelo {
 				String s = e.getAsJsonObject().get("properties").getAsJsonObject().get("FECHA_HORA").getAsString();	
 				Date FECHA_HORA = parser.parse(s); 
 
-				String MEDIO_DETE = e.getAsJsonObject().get("properties").getAsJsonObject().get("MEDIO_DETE").getAsString();
-				String CLASE_VEHI = e.getAsJsonObject().get("properties").getAsJsonObject().get("CLASE_VEHI").getAsString();
-				String TIPO_SERVI = e.getAsJsonObject().get("properties").getAsJsonObject().get("TIPO_SERVI").getAsString();
+				String MEDIO_DETE = e.getAsJsonObject().get("properties").getAsJsonObject().get("MEDIO_DETECCION").getAsString();
+				String CLASE_VEHI = e.getAsJsonObject().get("properties").getAsJsonObject().get("CLASE_VEHICULO").getAsString();
+				String TIPO_SERVI = e.getAsJsonObject().get("properties").getAsJsonObject().get("TIPO_SERVICIO").getAsString();
 				String INFRACCION = e.getAsJsonObject().get("properties").getAsJsonObject().get("INFRACCION").getAsString();
-				String DES_INFRAC = e.getAsJsonObject().get("properties").getAsJsonObject().get("DES_INFRAC").getAsString();	
+				String DES_INFRAC = e.getAsJsonObject().get("properties").getAsJsonObject().get("DES_INFRACCION").getAsString();	
 				String LOCALIDAD = e.getAsJsonObject().get("properties").getAsJsonObject().get("LOCALIDAD").getAsString();
 				String MUNICIPIO = e.getAsJsonObject().get("properties").getAsJsonObject().get("MUNICIPIO").getAsString();
 				
@@ -57,9 +57,9 @@ public class Modelo {
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, MUNICIPIO, longitud, latitud);
-				datos.add(c);;
+				datos.push(c);
 			}
-
+			
 		}
 		catch (FileNotFoundException | ParseException e) 
 		{
@@ -68,10 +68,10 @@ public class Modelo {
 		}
 	}
 
-	public MaxColaCP<Comparendo> cargarEnColaDePrioridad( int numDatos )
+	public MaxHeapCP<Comparendo> cargarEnHeapColaDePrioridad( int numDatos )
 	{
-		datosCP = new MaxColaCP<Comparendo>();
-
+		datosCP = new MaxHeapCP<Comparendo>();
+		
 		Iterator<Comparendo> it = datos.iterator();
 		
 		int i = 0;
@@ -82,26 +82,31 @@ public class Modelo {
 		}
 		
 		return datosCP;
-			
 	}
+
 	
-	public MaxColaCP<Comparendo> copiarDatos()
+	public MaxHeapCP<Comparendo> copiarDatos()
 	{
-		MaxColaCP<Comparendo> copia = new MaxColaCP<Comparendo>();
-		
-		copia = datosCP;
+		MaxHeapCP<Comparendo> copia = new MaxHeapCP<Comparendo>();
 		
 		return copia;
 	}
 	
+	public Stack<Comparendo> darDatos()
+	{
+		return datos;
+	}
 	
-	//Requerimiento 1.
-	public MaxColaCP<Comparendo> nComparendosMasNorteCola(int N, String[] lista)
+	
+	/*
+	 * Requerimiento 1. -Metodo que devuelve los n comparendos que estan mas al norte.
+	 */
+	public MaxHeapCP<Comparendo> nComparendosMasNorteCola(int N, String[] lista)
 	{
 		
-		MaxColaCP<Comparendo> data = copiarDatos();
+		MaxHeapCP<Comparendo> data = copiarDatos();
 		
-		MaxColaCP<Comparendo> aRetornar = new MaxColaCP<Comparendo>();
+		MaxHeapCP<Comparendo> aRetornar = new MaxHeapCP<Comparendo>();
 		
 		boolean termino = false;
 		
