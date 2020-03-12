@@ -14,25 +14,19 @@ public class MaxColaCP<T extends Comparable<T>> {
         ultimo = null;
     }
 
-    public boolean esVacia() {
-        return numElementos == 0;
-    }
-
     public int darNumElementos() {
         return numElementos;
     }
 
-    public void enQueue(T pElemento) {
-
+    public void agregar(T pElemento) {
         Node nuevo = new Node(pElemento);
+
         if (esVacia()) {
             primero = nuevo;
             ultimo = nuevo;
-
         } else {
             ultimo.cambiarSiguiente(nuevo);
             ultimo = nuevo;
-
         }
         numElementos++;
 
@@ -64,24 +58,9 @@ public class MaxColaCP<T extends Comparable<T>> {
         }
     }
 
-    public void agregar(T pElemento)
-    {
-        Node node = new Node(pElemento);
-        if(esVacia())
-        {
-            primero = node;
-            ultimo = node;
-        }
-        else
-        {
-            Node actual = primero;
 
-            while(actual!=null)
-            {
-
-            }
-        }
+    public boolean esVacia() {
+        return primero == null;
     }
-
 
 }

@@ -1,9 +1,8 @@
 package controller;
 
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import model.data_structures.Queue;
 import model.logic.Comparendo;
 import model.logic.Modelo;
 import view.View;
@@ -26,7 +25,7 @@ public class Controller {
         Scanner lector = new Scanner(System.in);
         boolean fin = false;
 
-        Queue<Comparendo> datos;
+        ArrayList<Comparendo> datos;
 
         while (!fin) {
             view.printMenu();
@@ -37,25 +36,7 @@ public class Controller {
                 case 1:
 
 
-                    view.printMessage("Ingrese la cantidad de datos a cargar en la cola de prioridad");
-
-                    modelo = new Modelo();
-
-                    int optionC = lector.nextInt();
-
-                    modelo.cargarDatos();
-
-                    long start = System.currentTimeMillis();
                     datos = modelo.cargarDatos();
-                    long end = System.currentTimeMillis();
-
-                    view.printMessage("Tiempo de carga (seg): " + (end-start)/1000.0 + "\n");
-
-                    view.printMessage("Numero de datos cargados: " + datos.darLongitud()+"\n");
-
-                    view.printMessage("Primer comparendo: "+datos.darPrimero().darElemento()+"\n");
-
-                    view.printMessage("Ultimo comparendo: "+datos.darUltimo().darElemento()+"\n");
 
 
                     break;
