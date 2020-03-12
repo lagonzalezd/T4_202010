@@ -75,6 +75,4 @@ public class MaxColaCP<I extends Comparable<I>> implements Iterable<I>, IMaxCola
 		}
 		
 	}
-
-
 }

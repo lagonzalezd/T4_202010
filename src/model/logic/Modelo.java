@@ -3,6 +3,7 @@ package model.logic;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Stack;
@@ -25,11 +26,11 @@ public class Modelo {
 	
 	private MaxColaCP<Comparendo> datosCCP;
 
-	public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C_small.geojson";
+	public static String PATH = "./data/Comparendos_DEI_2018_Bogotï¿½_D.C_small.geojson";
 	
 	/*
 	 * Datos Grandes:
-	 * public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C.geojson";
+	 * public static String PATH = "./data/Comparendos_DEI_2018_Bogotï¿½_D.C.geojson";
 	 */
 	
 	
@@ -210,16 +211,4 @@ public class Modelo {
 		
 		return mayor;
 	}
-
-	
-
-
-
-
-
-
-
-
-
-
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -83,7 +82,6 @@ public class Controller {
 
 				String lista2 = lector.next();
 				String[] listaS2 = lista2.split(",");
-
 
 				long inicio2 = System.currentTimeMillis();
 				MaxColaCP<Comparendo> all2 = modelo.nComparendosMasNorteConCola(N2, listaS2);

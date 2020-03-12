@@ -177,6 +177,4 @@ public class MaxHeapCP<K> implements Iterable<K>, IMaxHeapCP<K>
 			return copy.delMax();
 		}
 	}
-
-
 }
