@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 
-public class MaxColaCP<I extends Comparable<I>>
+public class MaxColaCP<I extends Comparable<I>> implements Iterable<I>, IMaxColaCP
 {
 	private Node<I> first;
 	private Node<I> last;
@@ -43,15 +43,14 @@ public class MaxColaCP<I extends Comparable<I>>
 		n++;
 	}
 
-	public I dequeue() 
-	{
-		if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-		I item = first.item;
-		first = first.next;
-		n--;
-		if (isEmpty()) last = null;
-		return item;
-	}
+    public I dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("Queue vacia");
+        I item = first.item;
+        first = first.next;
+        n--;
+        if (isEmpty()) last = null; 
+        return item;
+    }
 
 	public Iterator<I> iterator()  {
 		return new LinkedIterator(first);  
@@ -74,6 +73,7 @@ public class MaxColaCP<I extends Comparable<I>>
 			current = current.next; 
 			return item;
 		}
+		
 	}
 
 

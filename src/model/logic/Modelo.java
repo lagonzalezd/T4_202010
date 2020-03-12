@@ -13,16 +13,26 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import model.data_structures.MaxColaCP;
 import model.data_structures.MaxHeapCP;
 
 
 public class Modelo {
 
 	private Stack<Comparendo> datos;
-	
+
 	private MaxHeapCP<Comparendo> datosCP;
+	
+	private MaxColaCP<Comparendo> datosCCP;
 
 	public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C_small.geojson";
+	
+	/*
+	 * Datos Grandes:
+	 * public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C.geojson";
+	 */
+	
+	
 
 	public void cargarDatos() {
 
@@ -49,7 +59,7 @@ public class Modelo {
 				String DES_INFRAC = e.getAsJsonObject().get("properties").getAsJsonObject().get("DES_INFRACCION").getAsString();	
 				String LOCALIDAD = e.getAsJsonObject().get("properties").getAsJsonObject().get("LOCALIDAD").getAsString();
 				String MUNICIPIO = e.getAsJsonObject().get("properties").getAsJsonObject().get("MUNICIPIO").getAsString();
-				
+
 				double longitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(0).getAsDouble();
 
@@ -59,7 +69,7 @@ public class Modelo {
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, MUNICIPIO, longitud, latitud);
 				datos.push(c);
 			}
-			
+
 		}
 		catch (FileNotFoundException | ParseException e) 
 		{
@@ -71,27 +81,37 @@ public class Modelo {
 	public MaxHeapCP<Comparendo> cargarEnHeapColaDePrioridad( int numDatos )
 	{
 		datosCP = new MaxHeapCP<Comparendo>();
-		
+
 		Iterator<Comparendo> it = datos.iterator();
-		
+
 		int i = 0;
 		while(i < numDatos && it.hasNext())
 		{
 			datosCP.insert(it.next());
 			i++;
 		}
-		
+
 		return datosCP;
 	}
-
 	
-	public MaxHeapCP<Comparendo> copiarDatos()
+	public MaxColaCP<Comparendo> cargarEnColaColaDePrioridad( int numDatos )
 	{
-		MaxHeapCP<Comparendo> copia = new MaxHeapCP<Comparendo>();
-		
-		return copia;
+		datosCCP = new MaxColaCP<Comparendo>();
+
+		Iterator<Comparendo> it = datos.iterator();
+
+		int i = 0;
+		while(i < numDatos && it.hasNext())
+		{
+			datosCCP.enqueue(it.next());
+			i++;
+		}
+
+		return datosCCP;
 	}
-	
+
+
+
 	public Stack<Comparendo> darDatos()
 	{
 		return datos;
@@ -99,22 +119,55 @@ public class Modelo {
 	
 	
 	/*
-	 * Requerimiento 1. -Metodo que devuelve los n comparendos que estan mas al norte.
+	 * Requerimiento 1. -Metodo que devuelve los n comparendos que estan mas al norte en una cola de prioridad implementada con cola.
 	 */
-	public MaxHeapCP<Comparendo> nComparendosMasNorteCola(int N, String[] lista)
+	public MaxColaCP<Comparendo> nComparendosMasNorteConCola(int N, String[] lista)
 	{
+
+		MaxColaCP<Comparendo> aRetornar = new MaxColaCP<Comparendo>();
 		
-		MaxHeapCP<Comparendo> data = copiarDatos();
+		int i = 0;
+		while(i<N)
+		{
+			Comparendo mayor = darMaxCola();
+			Comparendo actual = datosCCP.dequeue();
+			if(actual == mayor)
+			{
+				for(String l: lista)
+				{
+					if(l.equalsIgnoreCase(actual.getClase_vehi()))
+					{
+						aRetornar.enqueue(actual);
+					}
+				}
+			}
+			i++;
+		}
 		
+		return aRetornar;
+
+	}
+
+
+
+	/*
+	 * Requerimiento 2. -Metodo que devuelve los n comparendos que estan mas al norte implementado por heap.
+	 */
+	public MaxHeapCP<Comparendo> nComparendosMasNorteConHeap(int N, String[] lista)
+	{
+
 		MaxHeapCP<Comparendo> aRetornar = new MaxHeapCP<Comparendo>();
-		
+
+		Iterator<Comparendo> data = datosCP.iterator();
+
 		boolean termino = false;
-		
-		for(int i = 0; i< data.size() && !termino; i++){
-					
-			Comparendo actual = data.delMax();
-			
+
+		for(int i = 0; i< datosCP.size() && !termino; i++){
+
+			Comparendo actual = data.next();
+
 			boolean es = false;
+			
 			for(String v: lista)
 			{
 				if(v.equalsIgnoreCase(actual.getClase_vehi()))
@@ -122,24 +175,51 @@ public class Modelo {
 					es = true;
 				}
 			}
-			
+
 			if(es) aRetornar.insert(actual);
 			
 			if(aRetornar.size() == N) termino = true;
-			
+
 		}
-		
+
 		return aRetornar;
-		
+
 	}
 	
-	
-	
-	
+	public Comparendo darMaxCola(){
+		
+		Comparendo mayor = null;
+		Comparendo actual = null;
+		Comparendo comp = null;
+		
+		Iterator<Comparendo> it = datosCCP.iterator();
+		
+		while(it.hasNext())
+		{
+			actual = it.next();
+			comp = it.next();
+			if(actual.compareTo(comp) > 0)
+			{
+				mayor = actual;
+			}
+			else
+			{
+				mayor = comp;
+			}
+		}
+		
+		return mayor;
+	}
+
 	
 
 
-	
-	
+
+
+
+
+
+
+
 
 }

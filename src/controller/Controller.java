@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Stack;
 
+import model.data_structures.MaxColaCP;
 import model.data_structures.MaxHeapCP;
 import model.logic.Comparendo;
 import model.logic.Modelo;
@@ -55,16 +56,47 @@ public class Controller {
 
 				int optionC = lector.nextInt();
 
-				long start = System.currentTimeMillis();
+				long starth = System.currentTimeMillis();
 				datos = modelo.cargarEnHeapColaDePrioridad(optionC);
-				long end = System.currentTimeMillis();
+				long endh = System.currentTimeMillis();
+				
+				long startc = System.currentTimeMillis();
+				datos = modelo.cargarEnHeapColaDePrioridad(optionC); //TODO: Cambiar por cola
+				long endc = System.currentTimeMillis();
 
-				view.printCargar02((end-start)/1000.0 + "", "heap");
-
+				view.printCargar02((endh-starth)/1000.0 + "", "heap");
+				
+				view.printCargar02((endc-startc)/1000.0 + "", "cola");
+				
 				view.printDatosCargados(datos.size() + "", "heap");
+				
+				view.printDatosCargados(datos.size() + "", "cola");
 
 				break;	
+
 			case 3:
+				view.printReq1part1();
+
+				int N2 = lector.nextInt();
+
+				view.printReq1part2();
+
+				String lista2 = lector.next();
+				String[] listaS2 = lista2.split(",");
+
+
+				long inicio2 = System.currentTimeMillis();
+				MaxColaCP<Comparendo> all2 = modelo.nComparendosMasNorteConCola(N2, listaS2);
+				long end22 = System.currentTimeMillis();
+
+				view.printMessage("Tiempo del requerimiento 1 (seg): " + (end22-inicio2)/1000.0 + "\n");
+
+				for (Comparendo c: all2)
+				{
+					view.printMessage("Object ID: " + c.getObjectId() + ", Clase del vehiculo: " + c.getClase_vehi() + ", latitud: " + c.getLatitud() +", longitud: " + c.getLongitud() + "\n");
+				}                	
+				break;
+				
 
 			case 4:
 				
@@ -79,10 +111,10 @@ public class Controller {
 
 
 				long inicio = System.currentTimeMillis();
-				MaxHeapCP<Comparendo> all = modelo.nComparendosMasNorteCola(N, listaS);
+				MaxHeapCP<Comparendo> all = modelo.nComparendosMasNorteConHeap(N, listaS);
 				long end2 = System.currentTimeMillis();
 
-				view.printMessage("Tiempo del requerimiento (seg): " + (end2-inicio)/1000.0 + "\n");
+				view.printMessage("Tiempo del requerimiento 1 (seg): " + (end2-inicio)/1000.0 + "\n");
 
 				for (Comparendo c: all)
 				{
@@ -92,16 +124,13 @@ public class Controller {
 
 
 			case 5:
-
-				lector.close();
+				
 				fin = true;
 				break;
-
+				
 			default:
 				view.printMessage("--------- Opcion Invalida!! ------------------");
 				break;
-
-
 			}
 		}
 

@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Stack<Item> implements Iterable<Item> {
+public class Stack<Item> implements Iterable<Item>, IStack {
 	private Node<Item> first;     
 	private int n; 
 
@@ -38,10 +38,10 @@ public class Stack<Item> implements Iterable<Item> {
 
 	public Item pop() {
 		if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-		Item item = first.item;        // save item to return
-		first = first.next;            // delete first node
+		Item item = first.item;        
+		first = first.next;            
 		n--;
-		return item;                   // return the saved item
+		return item;                 
 	}
 
 
@@ -49,16 +49,6 @@ public class Stack<Item> implements Iterable<Item> {
 	public Item peek() {
 		if (isEmpty()) throw new NoSuchElementException("Stack underflow");
 		return first.item;
-	}
-
-
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		for (Item item : this) {
-			s.append(item);
-			s.append(' ');
-		}
-		return s.toString();
 	}
 
 

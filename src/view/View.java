@@ -7,11 +7,10 @@ public class View
 		{
 			System.out.println("======================================================================================================");
 			System.out.println("| "+"1. Cargar todos los datos (Hacer esto antes de usar cualquier otra opcion)                         |");
-			System.out.println("| "+"2. Cargar datos en Cola de prioridad implementada con heap                                         |");
-			System.out.println("| "+"3. Cargar datos en Cola de prioridad implementada con cola                                         |");
-			System.out.println("| "+"4. Requerimiento 1: Mostrar los N comparendos que ocurrieron más al norte en una lista con Heap    |");
-			System.out.println("| "+"5. Requerimiento 2: Mostrar los N comparendos que ocurrieron más al norte en una lista con Cola    |");
-			System.out.println("| "+"6. Exit                                                                                            |"); 
+			System.out.println("| "+"2. Cargar datos en Cola de prioridad implementada con heap y cola                                  |");
+			System.out.println("| "+"3. Requerimiento 1: Mostrar los N comparendos que ocurrieron más al norte en una lista con Heap    |");
+			System.out.println("| "+"4. Requerimiento 2: Mostrar los N comparendos que ocurrieron más al norte en una lista con Cola    |");
+			System.out.println("| "+"5. Exit                                                                                            |"); 
 			System.out.println("======================================================================================================");
 		}
 

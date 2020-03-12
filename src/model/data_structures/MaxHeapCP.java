@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MaxHeapCP<K> implements Iterable<K>
+public class MaxHeapCP<K> implements Iterable<K>, IMaxHeapCP<K>
 {
 	private K[] pq;
 	private int N;
