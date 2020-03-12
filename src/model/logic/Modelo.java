@@ -5,12 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import model.data_structures.MaxColaCP;
 
 
 public class Modelo {
@@ -54,7 +56,7 @@ public class Modelo {
 
                 Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, MUNICIPIO, longitud, latitud);
                 datos.add(c);
-                ;
+
             }
 
         } catch (FileNotFoundException | ParseException e) {
@@ -65,5 +67,14 @@ public class Modelo {
     }
 
 
+    public void copiarAMaxColaMaxHeap() {
+
+        Iterator iter = datos.iterator();
+
+
+        while (iter.hasNext()) {
+
+        }
+    }
 
 }
