@@ -18,6 +18,7 @@ import model.data_structures.MaxColaCP;
 public class Modelo {
 
     private ArrayList<Comparendo> datos;
+    private MaxColaCP<Comparendo> colaCP;
 
 
     public static String PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C.geojson";
@@ -67,14 +68,40 @@ public class Modelo {
     }
 
 
-    public void copiarAMaxColaMaxHeap() {
+    public void copiarAmaxCola(int N) {
 
-        Iterator iter = datos.iterator();
+        for (int i = (int) Math.random(); i < N; i = (int) (i + Math.random())) {
+            colaCP.agregar(datos.get(i));
+        }
+
+    }
+
+    public MaxColaCP<Comparendo> nComparendosMasNorteCola(int N, String[] lista) {
 
 
-        while (iter.hasNext()) {
+        MaxColaCP<Comparendo> aRetornar = new MaxColaCP<>();
+
+        boolean termino = false;
+
+        for (int i = 0; i < colaCP.darNumElementos() && !termino; i++) {
+
+            Comparendo actual = colaCP.sacarMax();
+
+            boolean es = false;
+            for (String v : lista) {
+                if (v.equalsIgnoreCase(actual.getClase_vehi())) {
+                    es = true;
+                }
+            }
+
+            if (es) aRetornar.agregar(actual);
+
+            if (aRetornar.darNumElementos() == N) termino = true;
 
         }
+
+        return aRetornar;
+
     }
 
 }
